@@ -18,7 +18,7 @@ const addParsedToRawMsg = _raw => ({ _raw, parsed: parseFixMsg(_raw) })
 const structureParsedMsg = ({ _raw, parsed }) => ({
   short: pipe(
     reduce((acc, { fieldName, lookup, value }) => {
-      acc[fieldName] = isNil(lookup) ? lookup : value
+      acc[fieldName] = isNil(lookup) ? value : lookup
       return acc
     }, {}),
     assoc('_raw', _raw)   // _raw as last property
