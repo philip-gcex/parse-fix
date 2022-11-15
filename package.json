@@ -1,6 +1,6 @@
 {
   "name": "parse-fix",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A basic FIX protocol message parser",
   "main": "parseFix.mjs",
   "type": "module",
