@@ -1,0 +1,35 @@
+{
+  "name": "parse-fix",
+  "version": "0.0.1",
+  "description": "A basic FIX protocol message parser",
+  "main": "parseFix.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "node parseFix.test.mjs",
+    "tidy": "standard --fix",
+    "publish": "np"
+  },
+  "keywords": [
+    "FIX",
+    "FIX protocol",
+    "Financial Information Exchange"
+  ],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philip-gcex/parse-fix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/philip-gcex/parse-fix/issues"
+  },
+  "engines": {
+    "node": ">=8.0"
+  },
+  "dependencies": {
+    "ramda": "^0.28.0"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  }
+}
