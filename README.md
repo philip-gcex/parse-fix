@@ -9,7 +9,12 @@ npm install parse-fix
 ## Example
 
 ```js
-import { parseFixText, fixMessagesFromText, parseFixMsg } from 'parse-fix';
+import { 
+  parseFixText, 
+  fixMessagesFromText, 
+  parseFixMsg 
+} from 'parse-fix';
+
 const fixText = `
 127.0.0.1:55220 -> tcp -> some.server.com:8289
     8=FIX.4.49=9935=A34=149=MY_ORDERS52=20221112-00:57:16.86256=RECEIPIENT_SYSTEM98=0108=20141=Y554=password10=150
@@ -19,9 +24,9 @@ const fixText = `
     8=FIX.4.4|9=68\x0135=5|34=2|49=MY_ORDERS|52=20221112-00:57:17.862|56=RECEIPIENT_SYSTEM|10=084|
 `;
 
-const parsed = parseFixText(fixText)
-const msgsFromText = fixMessagesFromText(fixText)
-const oneParsedMsg = parseFixMsg(msgsFromText[0])
+const parsed = parseFixText(fixText);
+const msgsFromText = fixMessagesFromText(fixText);
+const oneParsedMsg = parseFixMsg(msgsFromText[0]);
 ```
 
 `parseFixText` returns an array of objects with fix keys:
