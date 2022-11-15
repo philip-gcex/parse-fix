@@ -1,7 +1,7 @@
 // A basic fix message parser
 import {
   reduce, pipe, split, map, filter,
-  head, groupBy, prop, assoc, path
+  head, groupBy, prop, assoc, path, isNil
 } from 'ramda'
 import { fixLookup } from './fixLookup.mjs'
 
@@ -18,7 +18,7 @@ const addParsedToRawMsg = _raw => ({ _raw, parsed: parseFixMsg(_raw) })
 const structureParsedMsg = ({ _raw, parsed }) => ({
   short: pipe(
     reduce((acc, { fieldName, lookup, value }) => {
-      acc[fieldName] = lookup ?? value
+      acc[fieldName] = isNil(lookup) ? lookup : value
       return acc
     }, {}),
     assoc('_raw', _raw)   // _raw as last property
