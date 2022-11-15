@@ -1,15 +1,15 @@
 // A basic fix message parser
 import {
   reduce, pipe, split, map, filter,
-  head, groupBy, prop, assoc
+  head, groupBy, prop, assoc, path
 } from 'ramda'
 import { fixLookup } from './fixLookup.mjs'
 
 // should be config object
 const delim = '(?:\\||\\x01|\\\\x01)'
 const fixMsgRe = new RegExp(`8=FIX\\..*?${delim}10=\\d+${delim}`, 'g')
-const getFieldName = ({ fieldNo }) => fixLookup?.[fieldNo]?.desc
-const getValueLookup = ({ fieldNo, value }) => fixLookup?.[fieldNo]?.enum?.[value]
+const getFieldName = ({ fieldNo }) => path([fieldNo,'desc'],fixLookup)
+const getValueLookup = ({ fieldNo, value }) => path([fieldNo,'enum',value],fixLookup)
 
 const asSingle = arr => arr.length === 1 ? arr[0] : arr
 const groupByProp = field => obj => map(asSingle, groupBy(prop(field), obj))
