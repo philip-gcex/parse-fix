@@ -5,7 +5,7 @@
   "main": "parseFix.mjs",
   "type": "module",
   "scripts": {
-    "test": "node parseFix.test.mjs",
+    "test": "node ./test/parseFix.test.mjs",
     "tidy": "standard --fix",
     "publish": "np"
   },

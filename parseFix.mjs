@@ -8,8 +8,8 @@ import { fixLookup } from './fixLookup.mjs'
 // should be config object
 const delim = '(?:\\||\\x01|\\\\x01)'
 const fixMsgRe = new RegExp(`8=FIX\\..*?${delim}10=\\d+${delim}`, 'g')
-const getFieldName = ({ fieldNo }) => path([fieldNo,'desc'],fixLookup)
-const getValueLookup = ({ fieldNo, value }) => path([fieldNo,'enum',value],fixLookup)
+const getFieldName = ({ fieldNo }) => path([fieldNo, 'desc'], fixLookup)
+const getValueLookup = ({ fieldNo, value }) => path([fieldNo, 'enum', value], fixLookup)
 
 const asSingle = arr => arr.length === 1 ? arr[0] : arr
 const groupByProp = field => obj => map(asSingle, groupBy(prop(field), obj))
@@ -21,12 +21,12 @@ const structureParsedMsg = ({ _raw, parsed }) => ({
       acc[fieldName] = isNil(lookup) ? value : lookup
       return acc
     }, {}),
-    assoc('_raw', _raw)   // _raw as last property
+    assoc('_raw', _raw) // _raw as last property
   )(parsed),
   parsed,
   byFieldName: groupByProp('fieldName')(parsed),
   byFieldNo: groupByProp('fieldNo')(parsed),
-  _raw,
+  _raw
 })
 
 export const parseFixMsg = pipe(
@@ -34,12 +34,15 @@ export const parseFixMsg = pipe(
   filter(x => x !== ''),
   map(pipe(
     split('='),
-    ([fieldNo, value]) => ({
-      fieldNo,
-      value,
-      fieldName: getFieldName({ fieldNo }),
-      lookup: getValueLookup({ fieldNo, value })
-    })
+    ([fieldNo, value]) => {
+      const ret = {
+        fieldNo,
+        value,
+        fieldName: getFieldName({ fieldNo })
+      }
+      const lookup = getValueLookup({ fieldNo, value })
+      return isNil(lookup) ? ret : assoc('lookup', lookup, ret)
+    }
   ))
 )
 
