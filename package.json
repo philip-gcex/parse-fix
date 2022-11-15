@@ -1,7 +1,7 @@
 {
   "name": "parse-fix",
   "version": "0.0.5",
-  "description": "A basic FIX protocol message parser",
+  "description": "A basic Node.js FIX protocol message parser",
   "main": "parseFix.mjs",
   "type": "module",
   "scripts": {

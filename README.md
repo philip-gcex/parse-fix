@@ -29,8 +29,8 @@ const msgsFromText = fixMessagesFromText(fixText);
 const oneParsedMsg = parseFixMsg(msgsFromText[0]);
 ```
 
-`parseFixText` returns an array of objects with fix keys:
-* `short` is a summary
+`parseFixText` returns an array of objects with these keys:
+* `short` is a summary field-name to field-value-or-lookup object
 * `parsed` is an array of field objects
 * `byFieldName` is an object of field objects, by field name
 * `byFieldNo` is an object of field objects, by field number
