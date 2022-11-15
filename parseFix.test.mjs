@@ -1,8 +1,12 @@
-import { parseFixText } from './parseFix.mjs'
+import { parseFixText, fixMessagesFromText, parseFixMsg } from './parseFix.mjs'
 import { promises as fs } from 'fs'
 
 const text = await fs.readFile('./test/test.log').then(r => r.toString('ascii'))
-console.log(text)
-const res = parseFixText(text)
+const parsed = parseFixText(text)
+const msgs = fixMessagesFromText(text)
 
-console.log(JSON.stringify(res, null, 2))
+const test = x => console.log(JSON.stringify(x, null, 2))
+
+test(parsed)
+test(msgs)
+test(parseFixMsg(msgs[0]))

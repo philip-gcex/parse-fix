@@ -11,6 +11,24 @@ const fixMsgRe = new RegExp(`8=FIX\\..*?${delim}10=\\d+${delim}`, 'g')
 const getFieldName = ({ fieldNo }) => fixLookup?.[fieldNo]?.desc
 const getValueLookup = ({ fieldNo, value }) => fixLookup?.[fieldNo]?.enum?.[value]
 
+const asSingle = arr => arr.length === 1 ? arr[0] : arr
+const groupByProp = field => obj => map(asSingle, groupBy(prop(field), obj))
+
+const addParsedToRawMsg = _raw => ({ _raw, parsed: parseFixMsg(_raw) })
+const structureParsedMsg = ({ _raw, parsed }) => ({
+  short: pipe(
+    reduce((acc, { fieldName, lookup, value }) => {
+      acc[fieldName] = lookup ?? value
+      return acc
+    }, {}),
+    assoc('_raw', _raw)   // _raw as last property
+  )(parsed),
+  parsed,
+  byFieldName: groupByProp('fieldName')(parsed),
+  byFieldNo: groupByProp('fieldNo')(parsed),
+  _raw,
+})
+
 export const parseFixMsg = pipe(
   split(new RegExp(delim, 'g')),
   filter(x => x !== ''),
@@ -30,24 +48,6 @@ export const fixMessagesFromText = pipe(
   Array.from,
   map(head)
 )
-
-const asSingle = arr => arr.length === 1 ? arr[0] : arr
-const groupByProp = field => obj => map(asSingle, groupBy(prop(field), obj))
-
-const addParsedToRawMsg = _raw => ({ _raw, parsed: parseFixMsg(_raw) })
-const structureParsedMsg = ({ _raw, parsed }) => ({
-  short: pipe(
-    reduce((acc, { fieldName, lookup, value }) => {
-      acc[fieldName] = lookup ?? value
-      return acc
-    }, {}),
-    assoc('_raw', _raw)   // _raw as last property
-  )(parsed),
-  parsed,
-  byFieldName: groupByProp('fieldName')(parsed),
-  byFieldNo: groupByProp('fieldNo')(parsed),
-  _raw,
-})
 
 export const parseFixText = pipe(
   fixMessagesFromText,
