@@ -1,4 +1,4 @@
-A basic FIX message parser
+A basic Node.js Financial Information Exchange (FIX) message parser
 
 ## Install
 
@@ -28,6 +28,8 @@ const parsed = parseFixText(fixText);
 const msgsFromText = fixMessagesFromText(fixText);
 const oneParsedMsg = parseFixMsg(msgsFromText[0]);
 ```
+
+Fix messages may be delimited by ASCII 1 (SOH: ), Pipe ("|") or escaped Ascii 1 ("\x01"), and are expected to begin with field 8 (BeginString) and end with field 10 (CheckSum).
 
 `parseFixText` returns an array of objects with these keys:
 * `short` is a summary field-name to field-value-or-lookup object
