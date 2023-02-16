@@ -34,6 +34,7 @@ export const parseFixMsg = pipe(
   filter(x => x !== ''),
   map(pipe(
     split('='),
+    ([fieldNo, ...value]) => [fieldNo, value.join('=')],
     ([fieldNo, value]) => {
       const ret = {
         fieldNo,
